@@ -17,7 +17,7 @@ export function Navbar() {
 async function AuthButtons() {
   const session = await getServerSession()
   if (session?.user) {
-    LoadUserToDb(session.user);
+    LoadUserToDb(session.user?.email!);
     return (
       <div className="navbar-end">
         {/* <Link className="btn" href="/api/auth/signout">Sign Out</Link> */}
@@ -39,8 +39,8 @@ async function AuthButtons() {
   )
 }
 
-async function LoadUserToDb(user: DefaultSession["user"]) {
-findOrCreateUser(user?.name!, user?.email!);
+async function LoadUserToDb(email: string) {
+findOrCreateUser( email );
 }
 
 
