@@ -40,7 +40,7 @@ async function AuthButtons() {
 }
 
 async function LoadUserToDb(email: string) {
-findOrCreateUser( email );
+  findOrCreateUser(email);
 }
 
 
