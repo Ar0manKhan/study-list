@@ -1,6 +1,7 @@
-import { getServerSession } from "next-auth"
+import { DefaultSession, getServerSession } from "next-auth"
 import Link from "next/link"
 import Image from "next/image"
+import { findOrCreateUser } from "@/db/user"
 
 export function Navbar() {
   return (
@@ -16,6 +17,7 @@ export function Navbar() {
 async function AuthButtons() {
   const session = await getServerSession()
   if (session?.user) {
+    LoadUserToDb(session.user);
     return (
       <div className="navbar-end">
         {/* <Link className="btn" href="/api/auth/signout">Sign Out</Link> */}
@@ -23,7 +25,7 @@ async function AuthButtons() {
           <label tabIndex={0}>
             <Image src={session.user.image || ""} alt="Profile" width={32} height={32} className="rounded-full" />
           </label>
-          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
             <li><Link href="/api/auth/signout">Sign Out</Link></li>
           </ul>
         </div>
@@ -36,3 +38,29 @@ async function AuthButtons() {
     </div>
   )
 }
+
+async function LoadUserToDb(user: DefaultSession["user"]) {
+findOrCreateUser(user?.name!, user?.email!);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
