@@ -1,9 +1,11 @@
+import { getServerSession } from "next-auth"
 import { TopicSidebar } from "./components/topic/sidebar"
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession();
   return (
     <main>
-      <TopicSidebar />
+      { session?.user?.email && <TopicSidebar /> }
       <h1>Hello Next</h1>
       <button className="btn btn-primary">Click me</button>
     </main>

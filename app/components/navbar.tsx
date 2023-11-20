@@ -1,4 +1,4 @@
-import { DefaultSession, getServerSession } from "next-auth"
+import { getServerSession } from "next-auth"
 import Link from "next/link"
 import Image from "next/image"
 import { findOrCreateUser } from "@/db/user"
@@ -20,7 +20,6 @@ async function AuthButtons() {
     LoadUserToDb(session.user?.email!);
     return (
       <div className="navbar-end">
-        {/* <Link className="btn" href="/api/auth/signout">Sign Out</Link> */}
         <div className="dropdown dropdown-end">
           <label tabIndex={0}>
             <Image src={session.user.image || ""} alt="Profile" width={32} height={32} className="rounded-full" />
