@@ -41,13 +41,28 @@ function NewTopicButton() {
       </button>
       <dialog id="add-topic-btn" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">Press ESC key or click outside to close</p>
+          <h3 className="font-bold text-lg">Add new topic</h3>
+          <div className="py-4">
+            <NewTopicForm />
+          </div>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
       </dialog>
     </>
+  );
+}
+
+function NewTopicForm() {
+  return (
+    <form>
+      <input
+        type="text"
+        placeholder="Title"
+        className="input input-bordered w-full"
+        required
+      />
+    </form>
   );
 }

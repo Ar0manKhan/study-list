@@ -7,6 +7,6 @@ export var user = pgTable("users", {
 
 export var topic = pgTable("topics", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }).unique().notNull(),
+  title: varchar("name", { length: 256 }).unique().notNull(),
   user: integer("user_id").references(() => user.id),
 });
