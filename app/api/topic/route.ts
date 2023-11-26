@@ -7,17 +7,20 @@ import { isAuthenticated } from "@/utils/isAuthenticated";
 import getUserId from "@/utils/users/getUserId";
 
 export async function GET(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.redirect("/api/auth/signin");
   }
-  const userId = await findOrCreateUser(session.user.email);
-  // if(!userId) {
-  //   return NextResponse.redirect("/api/auth/signin");
-  // }
-  // const topics = await getTopics(userId);
-  // console.log(topics);
-  return NextResponse.json({ name: "hello" });
+  try {
+    const topics = (await getTopics(userId)).map((e) => e.title);
+    return NextResponse.json(topics, { status: 200 });
+  } catch (error: any) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 },
+    );
+  }
 }
 
 export async function POST(req: Request) {

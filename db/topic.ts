@@ -3,7 +3,10 @@ import db from "./db";
 import { eq } from "drizzle-orm";
 
 export function getTopics(userId: number) {
-  return db.select().from(topic).where(eq(topic.user, userId));
+  return db
+    .select({ title: topic.title })
+    .from(topic)
+    .where(eq(topic.user, userId));
 }
 
 export async function createTopic(user: number, title: string) {
