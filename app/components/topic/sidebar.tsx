@@ -19,17 +19,23 @@ export function TopicSidebar() {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <NewTopicButton />
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
-        </ul>
+        <TopicList />
       </div>
     </div>
+  );
+}
+
+function TopicList() {
+  return (
+    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+      <NewTopicButton />
+      <li>
+        <a>Sidebar Item 1</a>
+      </li>
+      <li>
+        <a>Sidebar Item 2</a>
+      </li>
+    </ul>
   );
 }
 
@@ -62,7 +68,10 @@ function NewTopicForm() {
   const handleSubmit = async () => {
     try {
       const res = await axios.post("/api/topic", { title });
-      // if(res.status === 200)
+      // TODO: Add toast to show success
+      if (res.status === 200) {
+        alert("Topic added successfully");
+      }
     } catch (err) {
       console.log(err);
     } finally {
