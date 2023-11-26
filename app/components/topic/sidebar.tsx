@@ -27,7 +27,9 @@ export function TopicSidebar() {
 
 function TopicList() {
   const [topics, setTopics] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   const fetchTopics = async () => {
+    setLoading(true);
     try {
       // TODO: Add pagination
       const res = await axios.get("/api/topic");
@@ -35,7 +37,9 @@ function TopicList() {
         setTopics(res.data);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -43,25 +47,23 @@ function TopicList() {
   }, []);
   return (
     <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-      <NewTopicButton />
-      {topics.map((topic) => (
-        <li key={topic}>
-          <a>{topic}</a>
+      <NewTopicButton refetchFn={fetchTopics} />
+      {loading ? (
+        <li>
+          <a>Loading...</a>
         </li>
-      ))}
-      {/*
-      <li>
-        <a>Sidebar Item 1</a>
-      </li>
-      <li>
-        <a>Sidebar Item 2</a>
-      </li>
-      */}
+      ) : (
+        topics.map((topic) => (
+          <li key={topic}>
+            <a>{topic}</a>
+          </li>
+        ))
+      )}
     </ul>
   );
 }
 
-function NewTopicButton() {
+function NewTopicButton({ refetchFn }: { refetchFn: () => void }) {
   return (
     <>
       <button
