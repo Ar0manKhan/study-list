@@ -11,3 +11,13 @@ export async function findOrCreateUser(email: string): Promise<number> {
   return (await db.insert(user).values({ email }).returning({ id: user.id }))[0]
     .id;
 }
+
+export async function findUserByEmail(email: string) {
+  const res = await db.select().from(user).where(eq(user.email, email));
+  if (res.length > 0) {
+    return res[0];
+  }
+  return null;
+}
+
+export type User = typeof user.$inferSelect;

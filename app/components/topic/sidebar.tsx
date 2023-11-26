@@ -1,4 +1,7 @@
 "use client";
+import axios from "axios";
+
+import { useState } from "react";
 
 export function TopicSidebar() {
   return (
@@ -55,14 +58,45 @@ function NewTopicButton() {
 }
 
 function NewTopicForm() {
+  const [title, setTitle] = useState("");
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post("/api/topic", { title });
+      // if(res.status === 200)
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTitle("");
+      document.getElementById("add-topic-btn")?.close();
+    }
+  };
   return (
-    <form>
-      <input
-        type="text"
-        placeholder="Title"
-        className="input input-bordered w-full"
-        required
-      />
-    </form>
+    <>
+      <div>
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit();
+            }
+          }}
+          className="input input-bordered w-full"
+          required
+        />
+      </div>
+      <div className="w-full flex justify-end gap-4">
+        <button className="btn btn-primary mt-4" onClick={handleSubmit}>
+          Add
+        </button>
+        <form method="dialog">
+          <button className="btn btn-ghost mt-4" onClick={() => setTitle("")}>
+            Cancel
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
