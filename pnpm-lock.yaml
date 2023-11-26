@@ -29,8 +29,8 @@ dependencies:
 
 devDependencies:
   "@types/node":
-    specifier: ^20.9.5
-    version: 20.9.5
+    specifier: ^20.10.0
+    version: 20.10.0
   "@types/react":
     specifier: ^18.2.38
     version: 18.2.38
@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
   daisyui:
-    specifier: ^4.4.6
-    version: 4.4.6(postcss@8.4.31)
+    specifier: ^4.4.8
+    version: 4.4.8(postcss@8.4.31)
   drizzle-kit:
     specifier: ^0.20.4
     version: 0.20.4
@@ -1060,13 +1060,13 @@ packages:
         integrity: sha512-y6PJDYN4xYBxwd22l+OVH35N+1fCYWiuC3aiP2SlXVE6Lo7SS+rSx9r89hLxrP4pn6n1lBGhHJ12pj3F3Mpttw==,
       }
     dependencies:
-      "@types/node": 20.9.5
+      "@types/node": 20.10.0
     dev: true
 
-  /@types/node@20.9.5:
+  /@types/node@20.10.0:
     resolution:
       {
-        integrity: sha512-Uq2xbNq0chGg+/WQEU0LJTSs/1nKxz6u1iemLcGomkSnKokbW1fbLqc3HOqCf2JP7KjlL4QkS7oZZTrOQHQYgQ==,
+        integrity: sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==,
       }
     dependencies:
       undici-types: 5.26.5
@@ -1540,7 +1540,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001564
-      electron-to-chromium: 1.4.593
+      electron-to-chromium: 1.4.594
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: true
@@ -1800,10 +1800,10 @@ packages:
       type: 1.2.0
     dev: true
 
-  /daisyui@4.4.6(postcss@8.4.31):
+  /daisyui@4.4.8(postcss@8.4.31):
     resolution:
       {
-        integrity: sha512-Zum9dWsYufduID4IfwI1h/+qQIuoXBpVaG9l/rOlLOVbCmpvE7LQK/GDYE7YOT8NDXHOH+EqMqT8uzGqlbTFig==,
+        integrity: sha512-snl26WEyX/IoT789Fw5yBoSZA5YHKHJokcVfJ7p7xZa9Dwee3rvlWzBlRUuvJk0FeEGbaSpULcKo42qXkR5wDg==,
       }
     engines: { node: ">=16.9.0" }
     dependencies:
@@ -2062,10 +2062,10 @@ packages:
       postgres: 3.4.3
     dev: false
 
-  /electron-to-chromium@1.4.593:
+  /electron-to-chromium@1.4.594:
     resolution:
       {
-        integrity: sha512-c7+Hhj87zWmdpmjDONbvNKNo24tvmD4mjal1+qqTYTrlF0/sNpAcDlU0Ki84ftA/5yj3BF2QhSGEC0Rky6larg==,
+        integrity: sha512-xT1HVAu5xFn7bDfkjGQi9dNpMqGchUkebwf1GL7cZN32NSwwlHRPMSDJ1KN6HkS0bWUtndbSQZqvpQftKG2uFQ==,
       }
     dev: true
 
@@ -3762,7 +3762,7 @@ packages:
       glob-to-regexp: 0.4.1
       source-map-support: 0.5.21
       stoppable: 1.1.0
-      undici: 5.27.2
+      undici: 5.28.0
       workerd: 1.20231030.0
       ws: 8.14.2
       youch: 3.3.3
@@ -5278,10 +5278,10 @@ packages:
       }
     dev: true
 
-  /undici@5.27.2:
+  /undici@5.28.0:
     resolution:
       {
-        integrity: sha512-iS857PdOEy/y3wlM3yRp+6SNQQ6xU0mmZcwRSriqk+et/cwWAtwmIGf6WkoDN2EK/AMdCO/dfXzIwi+rFMrjjQ==,
+        integrity: sha512-gM12DkXhlAc5+/TPe60iy9P6ETgVfqTuRJ6aQ4w8RYu0MqKuXhaq3/b86GfzDQnNA3NUO6aUNdvevrKH59D0Nw==,
       }
     engines: { node: ">=14.0" }
     dependencies:
