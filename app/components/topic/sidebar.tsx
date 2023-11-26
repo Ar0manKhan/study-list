@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,7 @@ export function TopicSidebar() {
       <div className="drawer-content">
         {/* Page content here */}
         <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
-          Open drawer
+          Show topics
         </label>
       </div>
       <div className="drawer-side">
@@ -55,7 +56,7 @@ function TopicList() {
       ) : (
         topics.map((topic) => (
           <li key={topic}>
-            <a>{topic}</a>
+            <Link href={`/topic/${topic}`}>{topic}</Link>
           </li>
         ))
       )}
@@ -76,7 +77,7 @@ function NewTopicButton({ refetchFn }: { refetchFn: () => void }) {
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add new topic</h3>
           <div className="py-4">
-            <NewTopicForm />
+            <NewTopicForm refetchFn={refetchFn} />
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
@@ -87,7 +88,7 @@ function NewTopicButton({ refetchFn }: { refetchFn: () => void }) {
   );
 }
 
-function NewTopicForm() {
+function NewTopicForm({ refetchFn }: { refetchFn: () => void }) {
   const [title, setTitle] = useState("");
   const handleSubmit = async () => {
     try {
@@ -96,6 +97,7 @@ function NewTopicForm() {
       if (res.status === 200) {
         alert("Topic added successfully");
       }
+      refetchFn();
     } catch (err) {
       console.log(err);
     } finally {

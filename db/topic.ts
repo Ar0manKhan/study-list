@@ -1,12 +1,13 @@
 import { topic } from "./schema";
 import db from "./db";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export function getTopics(userId: number) {
   return db
     .select({ title: topic.title })
     .from(topic)
-    .where(eq(topic.user, userId));
+    .where(eq(topic.user, userId))
+    .orderBy(desc(topic.id));
 }
 
 export async function createTopic(user: number, title: string) {

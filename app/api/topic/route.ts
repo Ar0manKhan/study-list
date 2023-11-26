@@ -1,12 +1,8 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { createTopic, getTopics } from "@/db/topic";
-import { findOrCreateUser } from "@/db/user";
-import { isAuthenticated } from "@/utils/isAuthenticated";
 import getUserId from "@/utils/users/getUserId";
 
-export async function GET(req: Request) {
+export async function GET() {
   const userId = await getUserId();
   if (!userId) {
     return NextResponse.redirect("/api/auth/signin");
