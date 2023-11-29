@@ -2,11 +2,14 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import Image from "next/image";
 import { findOrCreateUser } from "@/db/user";
+import { TopicSidebar } from "./topic/sidebar";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await getServerSession();
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
+        {session?.user?.email && <TopicSidebar />}
         <Link className="btn btn-ghost text-xl" href="/">
           Study List
         </Link>

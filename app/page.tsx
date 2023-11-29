@@ -5,9 +5,11 @@ export default async function Home() {
   const session = await getServerSession();
   return (
     <main>
-      {session?.user?.email && <TopicSidebar />}
-      <h1>Hello Next</h1>
-      <button className="btn btn-primary">Click me</button>
+      <div className="flex">
+        <div className="flex-1">
+          <h1>Home</h1>
+        </div>
+      </div>
     </main>
   );
 }

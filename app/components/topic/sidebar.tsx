@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export function TopicSidebar() {
   return (
-    <div className="drawer">
+    <div className="drawer w-auto">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Page content here */}
