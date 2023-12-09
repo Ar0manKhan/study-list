@@ -7,16 +7,23 @@ import { useEffect, useState } from "react";
 export function TopicSidebar() {
   return (
     <div className="drawer w-auto">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        id="topic-sidebar-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+      />
       <div className="drawer-content">
         {/* Page content here */}
-        <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
+        <label
+          htmlFor="topic-sidebar-drawer"
+          className="btn btn-primary drawer-button"
+        >
           Show topics
         </label>
       </div>
       <div className="drawer-side">
         <label
-          htmlFor="my-drawer"
+          htmlFor="topic-sidebar-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
@@ -55,8 +62,13 @@ function TopicList() {
         </li>
       ) : (
         topics.map((topic) => (
-          <li key={topic}>
-            <Link href={`/topic/${topic}`}>{topic}</Link>
+          <li
+            key={topic}
+            onClick={() =>
+              document.getElementById("topic-sidebar-drawer")?.click()
+            }
+          >
+            <Link href={`/topics/${topic}`}>{topic}</Link>
           </li>
         ))
       )}
@@ -69,7 +81,11 @@ function NewTopicButton({ refetchFn }: { refetchFn: () => void }) {
     <>
       <button
         className="btn"
-        onClick={() => document.getElementById("add-topic-btn")?.showModal()}
+        onClick={() =>
+          (
+            document.getElementById("add-topic-btn") as HTMLDialogElement
+          ).showModal()
+        }
       >
         Add Topic
       </button>
@@ -102,7 +118,7 @@ function NewTopicForm({ refetchFn }: { refetchFn: () => void }) {
       console.log(err);
     } finally {
       setTitle("");
-      document.getElementById("add-topic-btn")?.close();
+      (document.getElementById("add-topic-btn") as HTMLDialogElement).close();
     }
   };
   return (

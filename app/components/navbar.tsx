@@ -14,7 +14,9 @@ export async function Navbar() {
           Study List
         </Link>
       </div>
-      <AuthButtons />
+      <div className="navbar-end">
+        <AuthButtons />
+      </div>
     </div>
   );
 }
@@ -24,35 +26,31 @@ async function AuthButtons() {
   if (session?.user) {
     LoadUserToDb(session.user?.email!);
     return (
-      <div className="navbar-end">
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0}>
-            <Image
-              src={session.user.image || ""}
-              alt="Profile"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
-          </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
-          >
-            <li>
-              <Link href="/api/auth/signout">Sign Out</Link>
-            </li>
-          </ul>
-        </div>
+      <div className="dropdown dropdown-end">
+        <label tabIndex={0}>
+          <Image
+            src={session.user.image || ""}
+            alt="Profile"
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
+        >
+          <li>
+            <Link href="/api/auth/signout">Sign Out</Link>
+          </li>
+        </ul>
       </div>
     );
   }
   return (
-    <div className="navbar-end">
-      <Link className="btn" href="/api/auth/signin">
-        Sign In
-      </Link>
-    </div>
+    <Link className="btn" href="/api/auth/signin">
+      Sign In
+    </Link>
   );
 }
 
