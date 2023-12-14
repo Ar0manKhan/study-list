@@ -1,4 +1,5 @@
 // TODO: Add auth middlewares
+import scrape from "@/utils/scrape";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -13,12 +14,7 @@ export async function POST(req: NextRequest) {
     return new Response("Something went wrong", { status: 500 });
   }
   // fetch url and extract title from the html
-  const res = await fetch(url);
-  const html = await res.text();
-  const title = html.match(/<title[^>]*>([^<]+)<\/title>/)?.[1];
-  if (!title) {
-    return new Response("Something went wrong", { status: 500 });
-  }
+  const title = await scrape(url);
   // TODO: Cache the title in the db
   return NextResponse.json({ title });
 }

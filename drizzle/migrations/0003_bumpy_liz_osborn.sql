@@ -1,0 +1,1 @@
+ALTER TABLE "posts" ADD CONSTRAINT "posts_topic_id_url_unique" UNIQUE("topic_id","url");
