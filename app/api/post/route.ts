@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     if (e)
       return NextResponse.json(
         { error: "Post already exists" },
-        { status: 400 },
+        { status: 409 },
       );
     return NextResponse.json({ error: "Unknown error" }, { status: 400 });
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { Axios } from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { useState } from "react";
 
 export function CreateNewPost({ topic }: { topic: string }) {
@@ -98,8 +98,16 @@ function NewPostDialog({ topic }: { topic: string }) {
             if (post.url === "" || post.title === "") {
               return alert("URL and Title are required");
             }
-            alert("calling this");
-            const res = await axios.post("/api/post", { topic, ...post });
+            try {
+              const res = await axios.post("/api/post", { topic, ...post });
+              console.log(res);
+            } catch (err: any) {
+              err = err as AxiosError;
+              console.log(err);
+              if (err.response?.status === 409) {
+                return alert("Post already exists");
+              }
+            }
           }}
         >
           Add

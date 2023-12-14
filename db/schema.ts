@@ -18,7 +18,7 @@ export var post = pgTable(
   {
     id: serial("id").primaryKey(),
     url: varchar("url", { length: 256 }).notNull(),
-    title: varchar("titel", { length: 256 }).notNull(),
+    title: varchar("title", { length: 256 }).notNull(),
     description: varchar("description", { length: 1024 }),
     topic: integer("topic_id")
       .notNull()
