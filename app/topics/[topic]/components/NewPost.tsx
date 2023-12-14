@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { Axios, AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
 export function CreateNewPost({ topic }: { topic: string }) {

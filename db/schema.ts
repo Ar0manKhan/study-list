@@ -1,12 +1,12 @@
 import { pgTable, serial, varchar, integer, unique } from "drizzle-orm/pg-core";
 
 export var user = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: serial("user_id").primaryKey(),
   email: varchar("email", { length: 256 }).unique().notNull(),
 });
 
 export var topic = pgTable("topics", {
-  id: serial("id").primaryKey(),
+  id: serial("topic_id").primaryKey(),
   title: varchar("name", { length: 256 }).notNull(),
   user: integer("user_id")
     .notNull()
@@ -16,7 +16,7 @@ export var topic = pgTable("topics", {
 export var post = pgTable(
   "posts",
   {
-    id: serial("id").primaryKey(),
+    id: serial("post_id").primaryKey(),
     url: varchar("url", { length: 256 }).notNull(),
     title: varchar("title", { length: 256 }).notNull(),
     description: varchar("description", { length: 1024 }),

@@ -2,6 +2,7 @@ import { getTopicByTitleAndUserId } from "@/db/topic";
 import { CreateNewPost } from "./components/NewPost";
 import { redirect } from "next/navigation";
 import getUserId from "@/utils/users/getUserId";
+import PostList from "./components/PostList";
 
 export default async function Topic({ params }: { params: { topic: string } }) {
   const user = await getUserId();
@@ -12,6 +13,7 @@ export default async function Topic({ params }: { params: { topic: string } }) {
   }
   return (
     <main>
+      <PostList topic={params.topic} />
       <CreateNewPost topic={params.topic} />
     </main>
   );

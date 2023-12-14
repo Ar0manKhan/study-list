@@ -21,7 +21,7 @@ export function TopicSidebar() {
           Show topics
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side z-10">
         <label
           htmlFor="topic-sidebar-drawer"
           aria-label="close sidebar"
