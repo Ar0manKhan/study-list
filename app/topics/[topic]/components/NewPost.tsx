@@ -52,7 +52,10 @@ function NewPostDialog({ topic }: { topic: string }) {
           type="url"
           placeholder="https://example.com/xyz/123"
           className="input input-bordered w-full"
+          value={post.url}
+          onChange={(e) => setPost({ ...post, url: e.target.value })}
           // BUG: This doesn't work when the user replaces the URL with another URL
+          // BUG: After adding url and before fetching title, if user added descriptoin, it will be lost
           onBlur={async (e) => {
             const url = e.target.value;
             if (url === "") return;
@@ -100,11 +103,21 @@ function NewPostDialog({ topic }: { topic: string }) {
             }
             try {
               const res = await axios.post("/api/post", { topic, ...post });
-              console.log(res);
+              if (res.status === 200) {
+                alert("Post created");
+                setPost({ url: "", title: "", description: "" });
+                (
+                  document.getElementById(
+                    "new-post-dailog",
+                  ) as HTMLDialogElement
+                ).close();
+              } else {
+                alert("Something went wrong");
+              }
             } catch (err: any) {
               err = err as AxiosError;
-              console.log(err);
               if (err.response?.status === 409) {
+                setPost({ ...post, url: "" });
                 return alert("Post already exists");
               }
             }
