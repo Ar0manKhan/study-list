@@ -48,3 +48,4 @@ It is build using following:
 - Add reordering of posts and topics
 - Add search
 - Add notes feature as well which will be different from links
+- Add docker file for auto-setup
