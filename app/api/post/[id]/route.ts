@@ -1,4 +1,4 @@
-import { updatePost } from "@/db/post";
+import { deletePostByIdAndUser, updatePost } from "@/db/post";
 import getUserId from "@/utils/users/getUserId";
 import { NextResponse } from "next/server";
 
@@ -21,4 +21,19 @@ export async function PUT(req: Request, params: { params: { id: string } }) {
     return new Response("Something went wrong", { status: 500 });
   }
   return NextResponse.json({ success: true }, { status: 200 });
+}
+
+export async function DELETE(req: Request, params: { params: { id: string } }) {
+  const id = parseInt(params.params.id);
+  if (isNaN(id)) return new Response("Invalid ID", { status: 400 });
+  const userId = await getUserId();
+  if (userId === null) return new Response("Unauthorized", { status: 401 });
+  try {
+    await deletePostByIdAndUser(userId, id);
+    return new Response("OK", { status: 200 });
+  } catch (e: any) {
+    if (e?.message === "Post not found")
+      return new Response(e.message, { status: 404 });
+    return new Response("Something went wrong", { status: 500 });
+  }
 }

@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 
 import { useEffect, useState } from "react";
 
@@ -67,8 +68,35 @@ function TopicList() {
             onClick={() =>
               document.getElementById("topic-sidebar-drawer")?.click()
             }
+            className="grid grid-cols-4 gap-4"
           >
-            <Link href={`/topics/${topic}`}>{topic}</Link>
+            <Link href={`/topics/${topic}`} className="col-span-3">
+              {topic}
+            </Link>
+            {/* TODO: Add confirmation button if topic has one or more post related to them */}
+            <button
+              className="btn btn-sm btn-error dark:btn-ghost w-fit justify-self-end"
+              onClick={async (e) => {
+                e.stopPropagation();
+                try {
+                  const res = await axios.delete(`/api/topic/${topic}`);
+                  if (res.status === 200) {
+                    alert("Topic deleted successfully");
+                  }
+                  fetchTopics();
+                } catch (err) {
+                  console.error(err);
+                  alert("Something went wrong, cannot delete topic");
+                }
+              }}
+            >
+              <Image
+                src="/trash-can-10416.svg"
+                height={14}
+                width={14}
+                alt={`Delete ${topic}`}
+              />
+            </button>
           </li>
         ))
       )}

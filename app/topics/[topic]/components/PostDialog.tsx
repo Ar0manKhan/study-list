@@ -100,8 +100,12 @@ export function EditPostDialog({
           }
         } catch (err: any) {
           err = err as AxiosError;
-          if (err.response?.status === 409) {
-            return alert("Post already exists");
+          if (err.response?.status === 400) {
+            return alert("Data is invalid");
+          } else if (err.response?.status === 404) {
+            return alert("Topic not found");
+          } else {
+            return alert("Something went wrong");
           }
         }
       }}

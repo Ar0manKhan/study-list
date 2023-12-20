@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import PostModal from "./PostModal";
+import axios, { AxiosError } from "axios";
+import DeletePostButton from "./DeletePostBtn";
 
 export default async function PostList({ topic }: { topic: string }) {
   const user = await getUserId();
@@ -44,14 +46,7 @@ function PostCard({
             url={url}
             description={description}
           />
-          <button className="btn btn-error">
-            <Image
-              src="/trash-can-10416.svg"
-              width={20}
-              height={20}
-              alt="expand"
-            />
-          </button>
+          <DeletePostButton id={id} />
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export var topic = pgTable("topics", {
   title: varchar("name", { length: 256 }).notNull(),
   user: integer("user_id")
     .notNull()
-    .references(() => user.id),
+    .references(() => user.id, { onDelete: "cascade" }),
 });
 
 export var post = pgTable(
@@ -22,7 +22,7 @@ export var post = pgTable(
     description: varchar("description", { length: 1024 }),
     topic: integer("topic_id")
       .notNull()
-      .references(() => topic.id),
+      .references(() => topic.id, { onDelete: "cascade" }),
   },
   (t) => ({
     uq: unique().on(t.topic, t.url),

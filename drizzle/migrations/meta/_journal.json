@@ -43,6 +43,20 @@
       "when": 1702528240008,
       "tag": "0005_smiling_roughhouse",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1703046577516,
+      "tag": "0006_shallow_micromacro",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1703047167125,
+      "tag": "0007_crazy_kabuki",
+      "breakpoints": true
     }
   ]
 }

@@ -28,3 +28,15 @@ export async function getTopicByTitleAndUserId(title: string, userId: number) {
   if (res.length === 0) return null;
   return res?.[0];
 }
+
+export async function deleteTopicByTitleAndUser(title: string, userId: number) {
+  try {
+    return await db
+      .delete(topic)
+      .where(and(eq(topic.title, title), eq(topic.user, userId)))
+      .returning({ id: topic.id });
+  } catch (e: any) {
+    if (e?.code === "23503") throw new Error("Topic has posts");
+    throw e;
+  }
+}

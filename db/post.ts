@@ -34,6 +34,23 @@ export async function createPost(data: {
   }
 }
 
+export async function getPostByIdAndUser(id: number, user: number) {
+  const resSelect = await db
+    .select({
+      user: topic.user,
+      id: post.id,
+      url: post.url,
+      title: post.title,
+      description: post.description,
+    })
+    .from(post)
+    .innerJoin(topic, eq(post.topic, topic.id))
+    .where(eq(post.id, id));
+  if (resSelect.length === 0 || resSelect[0]?.user !== user)
+    throw new Error("Post not found");
+  return resSelect[0];
+}
+
 export async function updatePost(
   user: number,
   id: number,
@@ -41,13 +58,7 @@ export async function updatePost(
   title: string,
   description?: string,
 ) {
-  const resSelect = await db
-    .select({ user: topic.user })
-    .from(post)
-    .innerJoin(topic, eq(post.topic, topic.id))
-    .where(eq(post.id, id));
-  if (resSelect.length === 0 || resSelect[0]?.user !== user)
-    throw new Error("Post not found");
+  await getPostByIdAndUser(id, user);
   try {
     await db
       .update(post)
@@ -57,6 +68,14 @@ export async function updatePost(
     if (e?.code === "22001") throw new Error("Data too long");
   }
   return true;
+}
+
+export async function deletePostByIdAndUser(user: number, id: number) {
+  await getPostByIdAndUser(id, user);
+  return await db
+    .delete(post)
+    .where(eq(post.id, id))
+    .returning({ id: post.id });
 }
 
 export interface Post {
