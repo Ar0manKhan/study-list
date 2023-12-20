@@ -1,5 +1,5 @@
 import { getTopicByTitleAndUserId } from "@/db/topic";
-import { CreateNewPost } from "./components/NewPost";
+import { CreateNewPost } from "./components/PostDialog";
 import { redirect } from "next/navigation";
 import getUserId from "@/utils/users/getUserId";
 import PostList from "./components/PostList";

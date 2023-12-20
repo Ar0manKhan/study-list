@@ -3,6 +3,7 @@ import getUserId from "@/utils/users/getUserId";
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import PostModal from "./PostModal";
 
 export default async function PostList({ topic }: { topic: string }) {
   const user = await getUserId();
@@ -31,20 +32,18 @@ function PostCard({
 }) {
   return (
     <div className="card w-96 bg-neutral text-base-content">
-      <div className="card-body">
+      <div className="card-body gap-4">
         <Link href={url} target="_blank">
           <h2 className="card-title underline">{title}</h2>
         </Link>
-        <p>{description}</p>
+        <p className="text-sm max-h-28 overflow-auto">{description}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">
-            <Image
-              src="/resize-arrows-14939.svg"
-              width={20}
-              height={20}
-              alt="expand"
-            />
-          </button>
+          <PostModal
+            id={id}
+            title={title}
+            url={url}
+            description={description}
+          />
           <button className="btn btn-error">
             <Image
               src="/trash-can-10416.svg"

@@ -33,3 +33,39 @@ export async function createPost(data: {
     throw e;
   }
 }
+
+export async function updatePost(
+  user: number,
+  id: number,
+  url: string,
+  title: string,
+  description?: string,
+) {
+  const resSelect = await db
+    .select({ user: topic.user })
+    .from(post)
+    .innerJoin(topic, eq(post.topic, topic.id))
+    .where(eq(post.id, id));
+  if (resSelect.length === 0 || resSelect[0]?.user !== user)
+    throw new Error("Post not found");
+  try {
+    await db
+      .update(post)
+      .set({ url, title, description })
+      .where(eq(post.id, id));
+  } catch (e: any) {
+    if (e?.code === "22001") throw new Error("Data too long");
+  }
+  return true;
+}
+
+export interface Post {
+  title: string;
+  url: string;
+  description: string;
+  topic: number;
+}
+
+export interface PostPg extends Post {
+  id: number;
+}

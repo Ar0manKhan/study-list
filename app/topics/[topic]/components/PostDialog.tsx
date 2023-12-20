@@ -30,18 +30,96 @@ export function CreateNewPost({ topic }: { topic: string }) {
   );
 }
 
-function NewPostDialog({ topic }: { topic: string }) {
-  type NewPostDialogProps = {
-    url: string;
-    title: string;
-    description: string;
-  };
-  const [post, setPost] = useState<NewPostDialogProps>({
-    url: "",
-    title: "",
-    description: "",
-  });
+type PostFormProps = {
+  url: string;
+  title: string;
+  description: string;
+};
 
+function NewPostDialog({ topic }: { topic: string }) {
+  return (
+    <PostForm
+      initialValue={{ url: "", title: "", description: "" }}
+      mainFn={async (post) => {
+        if (post.url === "" || post.title === "") {
+          return alert("URL and Title are required");
+        }
+        try {
+          const res = await axios.post("/api/post", { topic, ...post });
+          if (res.status === 200) {
+            alert("Post created");
+            window.location.reload();
+            (
+              document.getElementById("new-post-dailog") as HTMLDialogElement
+            ).close();
+          } else {
+            alert("Something went wrong");
+          }
+        } catch (err: any) {
+          err = err as AxiosError;
+          if (err.response?.status === 409) {
+            return alert("Post already exists");
+          }
+        }
+      }}
+      mainLabel="Add"
+    />
+  );
+}
+
+export function EditPostDialog({
+  id,
+  title,
+  url,
+  description,
+}: {
+  id: number;
+  title: string;
+  url: string;
+  description: string | null;
+}) {
+  return (
+    <PostForm
+      initialValue={{ url, title, description: description || "" }}
+      mainFn={async (post) => {
+        if (post.url === "" || post.title === "") {
+          return alert("URL and Title are required");
+        }
+        try {
+          const res = await axios.put(`/api/post/${id}`, { ...post });
+          if (res.status === 200) {
+            alert("Post updated");
+            window.location.reload();
+            (
+              document.getElementById(
+                `edit-post-dailog-${id}`,
+              ) as HTMLDialogElement
+            ).close();
+          } else {
+            alert("Something went wrong");
+          }
+        } catch (err: any) {
+          err = err as AxiosError;
+          if (err.response?.status === 409) {
+            return alert("Post already exists");
+          }
+        }
+      }}
+      mainLabel="Update"
+    />
+  );
+}
+
+function PostForm({
+  initialValue,
+  mainFn,
+  mainLabel,
+}: {
+  initialValue: PostFormProps;
+  mainFn: (post: PostFormProps) => void;
+  mainLabel: string;
+}) {
+  const [post, setPost] = useState<PostFormProps>(initialValue);
   return (
     <div className="flex flex-col gap-4">
       <label className="form-control w-full">
@@ -50,6 +128,7 @@ function NewPostDialog({ topic }: { topic: string }) {
         </div>
         <input
           type="url"
+          maxLength={256}
           placeholder="https://example.com/xyz/123"
           className="input input-bordered w-full"
           value={post.url}
@@ -77,6 +156,7 @@ function NewPostDialog({ topic }: { topic: string }) {
         </div>
         <input
           type="text"
+          maxLength={256}
           placeholder="NextJs app directory..."
           className="input input-bordered w-full"
           value={post.title}
@@ -89,47 +169,19 @@ function NewPostDialog({ topic }: { topic: string }) {
         </div>
         <textarea
           className="textarea textarea-bordered h-24"
+          maxLength={1024}
           placeholder="This is a stable feature..."
           value={post.description}
           onChange={(e) => setPost({ ...post, description: e.target.value })}
         ></textarea>
       </label>
       <div className="flex justify-end gap-4">
-        <button
-          className="btn btn-primary"
-          onClick={async () => {
-            if (post.url === "" || post.title === "") {
-              return alert("URL and Title are required");
-            }
-            try {
-              const res = await axios.post("/api/post", { topic, ...post });
-              if (res.status === 200) {
-                alert("Post created");
-                setPost({ url: "", title: "", description: "" });
-                (
-                  document.getElementById(
-                    "new-post-dailog",
-                  ) as HTMLDialogElement
-                ).close();
-              } else {
-                alert("Something went wrong");
-              }
-            } catch (err: any) {
-              err = err as AxiosError;
-              if (err.response?.status === 409) {
-                setPost({ ...post, url: "" });
-                return alert("Post already exists");
-              }
-            }
-          }}
-        >
-          Add
+        <button className="btn btn-primary" onClick={() => mainFn(post)}>
+          {mainLabel}
         </button>
         <button
           className="btn btn-warning"
-          onClick={() => {
-            setPost({ url: "", title: "", description: "" });
-          }}
+          onClick={() => setPost(initialValue)}
         >
           Reset
         </button>
