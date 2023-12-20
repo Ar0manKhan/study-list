@@ -33,7 +33,7 @@ function PostCard({
   description: string | null;
 }) {
   return (
-    <div className="card w-96 bg-neutral text-base-content">
+    <div className="card w-96 bg-base-300 dark:bg-neutral text-base-content">
       <div className="card-body gap-4">
         <Link href={url} target="_blank">
           <h2 className="card-title underline">{title}</h2>
