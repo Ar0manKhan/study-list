@@ -7,7 +7,8 @@ import PostList from "./components/PostList";
 export default async function Topic({ params }: { params: { topic: string } }) {
   const user = await getUserId();
   if (user === null) return redirect("/login");
-  const topic = await getTopicByTitleAndUserId(params.topic, user);
+
+  const topic = await getTopicByTitleAndUserId(decodeURI(params.topic), user);
   if (topic === null) {
     redirect("/404");
   }
